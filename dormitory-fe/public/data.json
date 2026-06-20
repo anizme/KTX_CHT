@@ -1,0 +1,50 @@
+{
+  "buildings": [
+    {
+      "id": "A",
+      "name": "Tòa A",
+      "floors": [
+        {
+          "id": "A1",
+          "name": "Tầng 1",
+          "rooms": [
+            { "id": "A101", "name": "A101", "capacity": 8, "studentIds": [1,2,3] },
+            { "id": "A102", "name": "A102", "capacity": 6, "studentIds": [4] }
+          ]
+        },
+        {
+          "id": "A2",
+          "name": "Tầng 2",
+          "rooms": [
+            { "id": "A201", "name": "A201", "capacity": 8, "studentIds": [] },
+            { "id": "A202", "name": "A202", "capacity": 6, "studentIds": [5,6] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Tòa B",
+      "floors": [
+        {
+          "id": "B1",
+          "name": "Tầng 1",
+          "rooms": [
+            { "id": "B101", "name": "B101", "capacity": 8, "studentIds": [7,8] },
+            { "id": "B102", "name": "B102", "capacity": 6, "studentIds": [] }
+          ]
+        }
+      ]
+    }
+  ],
+  "students": [
+    { "id": 1, "name": "Nguyễn Văn A", "sex": "Nam", "birthDate": "2006-01-01", "class": "10A1", "hometown": "Hà Tĩnh", "roomId": "A101" },
+    { "id": 2, "name": "Trần Thị B", "sex": "Nữ", "birthDate": "2006-02-02", "class": "10A2", "hometown": "Nghệ An", "roomId": "A101" },
+    { "id": 3, "name": "Lê Văn C", "sex": "Nam", "birthDate": "2006-03-03", "class": "10A1", "hometown": "Hà Tĩnh", "roomId": "A101" },
+    { "id": 4, "name": "Phạm Thị D", "sex": "Nữ", "birthDate": "2006-04-04", "class": "10A3", "hometown": "Quảng Bình", "roomId": "A102" },
+    { "id": 5, "name": "Hoàng Văn E", "sex": "Nam", "birthDate": "2006-05-05", "class": "10A2", "hometown": "Hà Tĩnh", "roomId": "A202" },
+    { "id": 6, "name": "Ngô Thị F", "sex": "Nữ", "birthDate": "2006-06-06", "class": "10A1", "hometown": "Nghệ An", "roomId": "A202" },
+    { "id": 7, "name": "Đặng Văn G", "sex": "Nam", "birthDate": "2006-07-07", "class": "10A3", "hometown": "Quảng Bình", "roomId": "B101" },
+    { "id": 8, "name": "Bùi Thị H", "sex": "Nữ", "birthDate": "2006-08-08", "class": "10A2", "hometown": "Quảng Bình", "roomId": "B101" }
+  ]
+}
