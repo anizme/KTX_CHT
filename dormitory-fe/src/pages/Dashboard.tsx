@@ -45,9 +45,12 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Tổng quan ký túc xá</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {data.buildings.map(building => {
+      <h1 className="text-3xl font-bold text-slate-800 mb-2">Tổng quan ký túc xá</h1>
+      <p className="text-slate-500 mb-6">
+        Tổng quan tình trạng phòng ở và học sinh trong ký túc xá
+      </p>
+      <div className="space-y-6">
+          {data.buildings.map(building => {
           const totalStudents = building.floors.reduce(
             (sum, f) => sum + f.rooms.reduce((s, r) => s + (r.studentIds?.length ?? 0), 0),
             0
@@ -55,7 +58,7 @@ export default function Dashboard() {
           const totalRooms = building.floors.reduce((sum, f) => sum + f.rooms.length, 0);
 
           return (
-            <div key={building.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div key={building.id} className="bg-white/85 rounded-lg shadow-md overflow-hidden">
               <div
                 className="bg-blue-50 px-4 py-3 flex justify-between items-center cursor-pointer hover:bg-blue-100"
                 onClick={() => toggleBuilding(building.id)}
@@ -106,17 +109,34 @@ export default function Dashboard() {
                         </div>
 
                         {expandedFloors[floor.id] && (
-                          <div className="p-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          <div className="p-3 grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
                             {floor.rooms.map(room => (
                               <div
                                 key={room.id}
-                                className="border rounded p-2 text-center cursor-pointer hover:bg-blue-50 transition"
+                                className="border rounded-lg p-2 text-center cursor-pointer hover:bg-blue-50/80 transition"
                                 onClick={() => navigate(`/search?roomId=${room.id}`)}
                               >
-                                <div className="font-mono text-sm font-medium">{room.name}</div>
-                                <div className="text-xs text-gray-500">
-                                  {room.studentIds?.length ?? 0}/{room.capacity}
+                                <div className="font-mono text-sm font-semibold">
+                                  {room.name}
                                 </div>
+
+                                {room.type === 'Phòng ở' ? (
+                                  <div className="text-xs text-slate-500">
+                                    {room.studentIds?.length ?? 0}/{room.capacity}
+                                  </div>
+                                ) : (
+                                  <div
+                                    className={`text-xs font-medium ${
+                                      room.type === 'Phòng tự học'
+                                        ? 'text-emerald-600'
+                                        : room.type === 'Canteen'
+                                        ? 'text-orange-600'
+                                        : 'text-slate-600'
+                                    }`}
+                                  >
+                                    {room.type}
+                                  </div>
+                                )}
                               </div>
                             ))}
                           </div>

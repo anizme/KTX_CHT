@@ -25,12 +25,13 @@ export default function Header() {
   ];
 
   return (
-    <header className="relative overflow-hidden">
+    // <header className="relative overflow-hidden">
+    <header className="sticky top-0 z-50 overflow-hidden">
       {/* Ảnh nền + overlay gradient */}
-      <div
+      {/* <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${COVER_IMAGE_URL})` }}
-      />
+      /> */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-blue-900/90 to-blue-800/80" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
 

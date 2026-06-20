@@ -35,7 +35,7 @@ export default function Footer() {
             <div className="flex gap-2.5 text-sm">
               <MapPinIcon className="w-4 h-4 mt-0.5 text-amber-300 shrink-0" />
               <p className="text-blue-200/70 leading-relaxed">
-                [Số 50, Đường Hà Hoàng, Phường Trần Phú, Tỉnh Hà Tĩnh]
+                Số 50, Đường Hà Hoàng, Phường Trần Phú, Tỉnh Hà Tĩnh
               </p>
             </div>
           </div>

@@ -20,8 +20,8 @@ export default function Login() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-12 bg-white p-8 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Đăng nhập quản lý</h2>
+    <div className="max-w-md mx-auto mt-12 bg-white/85 p-8 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Đăng nhập</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="username" className="block text-sm font-medium text-gray-700">Tên đăng nhập</label>
@@ -30,7 +30,7 @@ export default function Login() {
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block bg-white w-full px-4 py-3 rounded-lg border border-slate-300 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
             required
           />
         </div>
@@ -41,7 +41,7 @@ export default function Login() {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block bg-white w-full px-4 py-3 rounded-lg border border-slate-300 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
             required
           />
         </div>
@@ -53,7 +53,7 @@ export default function Login() {
           Đăng nhập
         </button>
       </form>
-      <p className="mt-4 text-sm text-gray-500 text-center">Tài khoản mặc định: admin / 123456</p>
+      <p className="mt-4 text-sm text-gray-500 text-center">Chỉ dành cho cán bộ quản lý.</p>
     </div>
   );
 }

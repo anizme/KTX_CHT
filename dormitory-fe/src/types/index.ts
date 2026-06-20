@@ -1,6 +1,7 @@
 export interface Student {
   id: number;
   name: string;
+  sex: 'Nam' | 'Nữ';
   birthDate: string;
   class: string;
   hometown: string;
