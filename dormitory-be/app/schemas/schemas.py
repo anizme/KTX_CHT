@@ -162,9 +162,13 @@ class RoomUpdate(BaseModel):
 class RoomOut(BaseModel):
     id: int
     floor_id: int
+    building_id: int
     label: str
     code: str
+    floor_number: int
+    building_code: str
     type: RoomType
+    occupancy: int
     capacity: int
     available_slots: int
 

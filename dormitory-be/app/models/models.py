@@ -114,6 +114,18 @@ class Room(Base):
         return f"{self.floor.code}-P{self.label}"
     
     @property
+    def floor_number(self):
+        return self.floor.number
+    
+    @property
+    def building_id(self):
+        return self.floor.building_id
+    
+    @property
+    def building_code(self):
+        return self.floor.building.code
+    
+    @property
     def occupancy(self):
         """Return the number of students currently in this room."""
         return len(self.students)
