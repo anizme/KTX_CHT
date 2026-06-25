@@ -6,7 +6,6 @@ from app.models.database import get_db
 from app.models.models import Room, Floor, User, RoomType
 from app.schemas.schemas import RoomCreate, RoomUpdate, RoomOut, RoomDetail
 from app.core.security import require_manager
-from app.core.code_gen import room_code as make_room_code
 
 router = APIRouter(prefix="/rooms", tags=["Rooms"])
 
@@ -51,11 +50,9 @@ def create_room(
     f = db.query(Floor).filter(Floor.id == payload.floor_id).first()
     if not f:
         raise HTTPException(status_code=404, detail="Không tìm thấy tầng")
-    rc = make_room_code(f.code, payload.label)
-    if db.query(Room).filter(Room.code == rc).first():
+    if db.query(Room).filter(Room.label == payload.label and Room.floor_id == payload.floor_id).first():
         raise HTTPException(status_code=400, detail=f"Phòng {payload.label} ở tầng {f.number} của tòa {f.building.code} đã tồn tại")
     room = Room(
-        code=rc,
         label=payload.label,
         floor_id=payload.floor_id,
         type=payload.type,

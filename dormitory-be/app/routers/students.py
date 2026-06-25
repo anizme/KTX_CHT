@@ -8,9 +8,7 @@ from app.schemas.schemas import (
     StudentCreate, StudentUpdate,
     StudentOut, StudentDetail,
 )
-from app.schemas.helper import (
-    to_student_out, to_student_detail,
-)
+
 from app.core.security import require_manager
 
 router = APIRouter(prefix="/students", tags=["Students"])
@@ -71,12 +69,7 @@ def list_students_public(
 
         q = q.filter(Floor.number == floor_number)
 
-    students = q.all()
-
-    return [
-        to_student_out(student)
-        for student in students
-    ]
+    return q.all()
 
 
 # MANAGER / ADMIN
@@ -95,7 +88,7 @@ def get_student(
     )
     if not s:
         raise HTTPException(status_code=404, detail="Không tìm thấy sinh viên")
-    return to_student_detail(s)
+    return s
 
 
 @router.post("", response_model=StudentOut, status_code=201, summary="Thêm sinh viên (manager+)")
@@ -133,7 +126,7 @@ def create_student(
     db.add(student)
     db.commit()
     db.refresh(student)
-    return to_student_out(student)
+    return student
 
 
 @router.patch("/{student_id}", response_model=StudentDetail, summary="Cập nhật sinh viên (manager+)")
@@ -164,7 +157,7 @@ def update_student(
         setattr(student, field, val)
     db.commit()
     db.refresh(student)
-    return to_student_detail(student)
+    return student
 
 
 @router.delete("/{student_id}", status_code=204, summary="Xoá sinh viên (manager+)")
@@ -202,4 +195,4 @@ def assign_room(
     student.room_id = room_id or None
     db.commit()
     db.refresh(student)
-    return to_student_out(student)
+    return student

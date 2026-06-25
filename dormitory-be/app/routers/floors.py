@@ -6,7 +6,6 @@ from app.models.database import get_db
 from app.models.models import Floor, Building, User
 from app.schemas.schemas import FloorCreate, FloorOut, FloorDetail
 from app.core.security import require_manager
-from app.core.code_gen import floor_code as make_floor_code
 
 router = APIRouter(prefix="/floors", tags=["Floors"])
 
@@ -53,9 +52,7 @@ def create_floor(
             detail=f"Tòa {b.label} đã có tầng {payload.number}"
         )
     
-    fc = make_floor_code(b.code, payload.number)
-    
-    f = Floor(code=fc, building_id=payload.building_id, number=payload.number)
+    f = Floor(building_id=payload.building_id, number=payload.number)
     db.add(f)
     db.commit()
     db.refresh(f)

@@ -106,6 +106,7 @@ class StudentOut(BaseModel):
     gender: Optional[Gender]
     hometown: Optional[str]
     class_name: Optional[str]
+    room_id: Optional[int]
     room_label: Optional[str]
     floor_number: Optional[int]
     building_code: Optional[str]
@@ -125,8 +126,14 @@ class StudentDetail(BaseModel):
     parent_phone: Optional[str]
 
     note: Optional[str]
+
+    room_id: Optional[int]
     room_label: Optional[str]
+
+    floor_id: Optional[int]
     floor_number: Optional[int]
+
+    building_id: Optional[int]
     building_code: Optional[str]
 
     violation_count: int
@@ -159,6 +166,7 @@ class RoomOut(BaseModel):
     code: str
     type: RoomType
     capacity: int
+    available_slots: int
 
     model_config = {"from_attributes": True}
 
@@ -166,7 +174,6 @@ class RoomOut(BaseModel):
 # PUBLIC ROOM DETAIL (tree view)
 class RoomDetail(RoomOut):
     students: List[StudentOut] = []
-    occupied: int = 0
 
 
 # =========================================================
@@ -183,6 +190,8 @@ class FloorOut(BaseModel):
     building_id: int
     number: int
     code: str
+    occupancy: int
+    available_slots: int
 
     model_config = {"from_attributes": True}
 
@@ -200,6 +209,8 @@ class BuildingCreate(BaseModel):
 class BuildingOut(BaseModel):
     id: int
     code: str
+    occupancy: int
+    available_slots: int
 
     model_config = {"from_attributes": True}
 
@@ -211,9 +222,9 @@ class BuildingDetail(BuildingOut):
 # STATS
 
 class OverviewStats(BaseModel):
+    buildings: List[BuildingDetail]
+
     total_buildings: int
-    total_floors: int
-    total_rooms: int
-    total_students: int
     total_dorm_rooms: int
-    occupied_rooms: int
+    total_occupancy: int
+    available_slots: int
