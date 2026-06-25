@@ -20,7 +20,7 @@ export default function Header() {
     { to: '/', label: 'Tổng quan', match: (p: string) => p === '/' },
     { to: '/search', label: 'Tìm kiếm', match: (p: string) => p.startsWith('/search') },
     ...(user
-      ? [{ to: '/management', label: 'Quản lý', match: (p: string) => p.startsWith('/management') }]
+      ? [{ to: '/manager', label: 'Quản lý', match: (p: string) => p.startsWith('/manager') }]
       : []),
   ];
 

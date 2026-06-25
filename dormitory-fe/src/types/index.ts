@@ -16,8 +16,8 @@ export const ROOM_TYPE_LABELS: Record<RoomType, string> = {
   CANTEEN: 'Nhà ăn',
   COMMON: 'Phòng sinh hoạt chung',
   GUEST: 'Phòng khách',
-  SUPERVISOR: 'Phòng quản lý',
-  OFFICE: 'Văn phòng',
+  SUPERVISOR: 'Phòng quản sinh',
+  OFFICE: 'Phòng hành chính',
   OTHER: 'Khác',
 };
 
