@@ -228,3 +228,9 @@ class OverviewStats(BaseModel):
     total_dorm_rooms: int
     total_occupancy: int
     available_slots: int
+
+
+# AUTO ASSIGN RESULT
+class AutoAssignResult(BaseModel):
+    assigned_students: List[int]
+    unassigned_students: List[int]

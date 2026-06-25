@@ -1,6 +1,6 @@
 import enum
 from sqlalchemy import (
-    Column, String, Integer, Text, Date, Enum, ForeignKey, BigInteger, DateTime
+    Column, String, Integer, Text, Date, Enum, ForeignKey, DateTime
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -10,7 +10,7 @@ from .database import Base
 # Enums 
 
 class RoomType(str, enum.Enum):
-    DORM = "DORM"                # Phòng ở sinh viên
+    DORM = "DORM"                # Phòng ở học sinh
     STUDY = "STUDY"              # Phòng học
     CANTEEN = "CANTEEN"          # Nhà ăn
 
@@ -145,8 +145,16 @@ class Student(Base):
         return self.room.label if self.room else None
     
     @property
+    def floor_id(self):
+        return self.room.floor.id if self.room else None
+    
+    @property
     def floor_number(self):
         return self.room.floor.number if self.room else None
+    
+    @property
+    def building_id(self):
+        return self.room.floor.building.id if self.room else None
     
     @property
     def building_code(self):

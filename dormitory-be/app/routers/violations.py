@@ -42,7 +42,7 @@ def create_violation(
 ):
     student = db.query(Student).filter(Student.id == payload.student_id).first()
     if not student:
-        raise HTTPException(status_code=404, detail="Không tìm thấy sinh viên")
+        raise HTTPException(status_code=404, detail="Không tìm thấy học sinh")
     v = Violation(**payload.model_dump())
     db.add(v)
     # increment counter

@@ -11,7 +11,7 @@ router = APIRouter(prefix="/overview", tags=["Overview (public)"])
 @router.get(
     "",
     response_model=OverviewStats,
-    summary="Tổng quan ký túc xá: tòa → tầng → phòng → sinh viên (public)",
+    summary="Tổng quan ký túc xá: tòa → tầng → phòng → học sinh (public)",
 )
 def get_overview(db: Session = Depends(get_db)):
     buildings = (

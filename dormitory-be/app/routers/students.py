@@ -3,22 +3,23 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session, joinedload
 
 from app.models.database import get_db
-from app.models.models import Student, Room, User, Gender, Floor
+from app.models.models import Building, RoomType, Student, Room, User, Gender, Floor
 from app.schemas.schemas import (
-    StudentCreate, StudentUpdate,
+    AutoAssignResult, StudentCreate, StudentUpdate,
     StudentOut, StudentDetail,
 )
 
 from app.core.security import require_manager
+from app.utils.keywords import Null
 
 router = APIRouter(prefix="/students", tags=["Students"])
 
 
 # PUBLIC
 
-@router.get("/public", response_model=List[StudentOut], summary="Danh sách sinh viên (public - ẩn thông tin nhạy cảm)")
+@router.get("/public", response_model=List[StudentOut], summary="Danh sách học sinh (public - ẩn thông tin nhạy cảm)")
 def list_students_public(
-    room_id: Optional[int] = None,
+    room_id: Optional[int | Null] = None,
     gender: Optional[Gender] = None,
     class_name: Optional[str] = None,
     hometown: Optional[str] = None,
@@ -38,7 +39,10 @@ def list_students_public(
     )
 
     if room_id is not None:
-        q = q.filter(Student.room_id == room_id)
+        if room_id == Null.UPPER_NULL or room_id == Null.LOWER_NULL:
+            q = q.filter(Student.room_id.is_(None))
+        else:
+            q = q.filter(Student.room_id == room_id)
 
     if gender is not None:
         q = q.filter(Student.gender == gender)
@@ -74,7 +78,7 @@ def list_students_public(
 
 # MANAGER / ADMIN
 
-@router.get("/{student_id}", response_model=StudentDetail, summary="Chi tiết sinh viên (manager+)")
+@router.get("/{student_id}", response_model=StudentDetail, summary="Chi tiết học sinh (manager+)")
 def get_student(
     student_id: int,
     db: Session = Depends(get_db),
@@ -87,18 +91,18 @@ def get_student(
         .first()
     )
     if not s:
-        raise HTTPException(status_code=404, detail="Không tìm thấy sinh viên")
+        raise HTTPException(status_code=404, detail="Không tìm thấy học sinh")
     return s
 
 
-@router.post("", response_model=StudentOut, status_code=201, summary="Thêm sinh viên (manager+)")
+@router.post("", response_model=StudentOut, status_code=201, summary="Thêm học sinh (manager+)")
 def create_student(
     payload: StudentCreate,
     db: Session = Depends(get_db),
     _: User = Depends(require_manager),
 ):
     if db.query(Student).filter(Student.phone == payload.phone).first():
-        raise HTTPException(status_code=400, detail=f"Sinh viên với số điện thoại {payload.phone} đã tồn tại")
+        raise HTTPException(status_code=400, detail=f"học sinh với số điện thoại {payload.phone} đã tồn tại")
     if payload.room_id:
         room = db.query(Room).filter(Room.id == payload.room_id).first()
         if not room:
@@ -110,7 +114,7 @@ def create_student(
             if room.students[0].gender != payload.gender:
                 raise HTTPException(
                     status_code=400,
-                    detail="Phòng không phù hợp với giới tính sinh viên"
+                    detail="Phòng không phù hợp với giới tính học sinh"
                 )
         
     student = Student(
@@ -129,7 +133,7 @@ def create_student(
     return student
 
 
-@router.patch("/{student_id}", response_model=StudentDetail, summary="Cập nhật sinh viên (manager+)")
+@router.patch("/{student_id}", response_model=StudentDetail, summary="Cập nhật học sinh (manager+)")
 def update_student(
     student_id: int,
     payload: StudentUpdate,
@@ -138,7 +142,7 @@ def update_student(
 ):
     student = db.query(Student).filter(Student.id == student_id).first()
     if not student:
-        raise HTTPException(status_code=404, detail="Không tìm thấy sinh viên")
+        raise HTTPException(status_code=404, detail="Không tìm thấy học sinh")
 
     # Validate room change
     new_room_id = payload.room_id
@@ -160,7 +164,7 @@ def update_student(
     return student
 
 
-@router.delete("/{student_id}", status_code=204, summary="Xoá sinh viên (manager+)")
+@router.delete("/{student_id}", status_code=204, summary="Xoá học sinh (manager+)")
 def delete_student(
     student_id: int,
     db: Session = Depends(get_db),
@@ -168,12 +172,12 @@ def delete_student(
 ):
     student = db.query(Student).filter(Student.id == student_id).first()
     if not student:
-        raise HTTPException(status_code=404, detail="Không tìm thấy sinh viên")
+        raise HTTPException(status_code=404, detail="Không tìm thấy học sinh")
     db.delete(student)
     db.commit()
 
 
-@router.post("/{student_id}/assign-room", response_model=StudentOut, summary="Xếp phòng sinh viên (manager+)")
+@router.post("/{student_id}/assign-room", response_model=StudentOut, summary="Xếp phòng học sinh (manager+)")
 def assign_room(
     student_id: int,
     room_id: Optional[int] = Query(None, description="Để trống để huỷ xếp phòng"),
@@ -182,7 +186,7 @@ def assign_room(
 ):
     student = db.query(Student).filter(Student.id == student_id).first()
     if not student:
-        raise HTTPException(status_code=404, detail="Không tìm thấy sinh viên")
+        raise HTTPException(status_code=404, detail="Không tìm thấy học sinh")
     if room_id:
         room = db.query(Room).filter(Room.id == room_id).first()
         if not room:
@@ -196,3 +200,104 @@ def assign_room(
     db.commit()
     db.refresh(student)
     return student
+
+
+def can_assign(room: Room, student: Student) -> bool:
+    if room.available_slots <= 0:
+        return False
+
+    if room.occupancy == 0:
+        return True
+
+    return room.students[0].gender == student.gender
+
+
+def assign_student(room: Room, student: Student):
+    student.room_id = room.id
+    room.students.append(student)
+
+
+
+@router.post("/auto-assign", response_model=AutoAssignResult, summary="Tự động xếp phòng học sinh (manager+)")
+def auto_assign_students(
+    student_ids: Optional[List[int]] = Query(None, description="Danh sách học sinh cần xếp"),
+    room_ids: Optional[List[int]] = Query(None, description="Danh sách phòng được phép sử dụng"),
+    db: Session = Depends(get_db),
+    _: User = Depends(require_manager),
+):
+    student_query = db.query(Student).filter(
+            Student.room_id.is_(None)
+    )
+
+    if student_ids:
+        student_query = student_query.filter(
+            Student.id.in_(student_ids)
+        )
+
+    students = student_query.order_by(Student.id).all()
+
+    if not students:
+        return AutoAssignResult(
+            assigned_students=[],
+            unassigned_students=[],
+        )
+
+    room_query = (
+        db.query(Room)
+        .join(Room.floor)
+        .join(Floor.building)
+        .filter(Room.type == RoomType.DORM)
+    )
+
+    if room_ids:
+        room_query = room_query.filter(
+            Room.id.in_(room_ids)
+        )
+
+    rooms = (
+        room_query
+        .order_by(
+            Building.code,
+            Floor.number,
+            Room.label,
+        )
+        .all()
+    )
+
+    # Ưu tiên nữ trước
+    students.sort(
+        key=lambda s: (
+            0 if s.gender == Gender.FEMALE else 1,
+            s.id,
+        )
+    )
+
+    assigned_students = []
+    unassigned_students = []
+
+    for student in students:
+
+        target_room = next(
+            (
+                room
+                for room in rooms
+                if can_assign(room, student)
+            ),
+            None,
+        )
+
+        if target_room is None:
+            unassigned_students.append(student.id)
+            continue
+
+        assign_student(target_room, student)
+        assigned_students.append(student.id)
+
+    db.commit()
+
+    return AutoAssignResult(
+        assigned_students=assigned_students,
+        unassigned_students=unassigned_students,
+    )
+
+    
