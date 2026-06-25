@@ -15,7 +15,7 @@ router = APIRouter(prefix="/rooms", tags=["Rooms"])
 @router.get("", response_model=List[RoomOut], summary="Danh sách phòng (public)")
 def list_rooms(
     floor_id: Optional[int] = None,
-    type: Optional[RoomType] = RoomType.DORM,
+    type: Optional[RoomType] = None,
     db: Session = Depends(get_db),
 ):
     q = db.query(Room)
