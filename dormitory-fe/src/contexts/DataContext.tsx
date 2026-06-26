@@ -5,6 +5,8 @@ import type {
   SearchFilters, LocationInfo,
 } from '../types';
 
+import { overviewApi } from "../services/api";
+
 interface DataContextType {
   data: DormitoryData;
   loading: boolean;
@@ -24,10 +26,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/data.json')
-      .then(res => setData(res.data))
-      .catch(err => console.error('Failed to load data:', err))
-      .finally(() => setLoading(false));
+    overviewApi.get()
+    .then(res => setData(res.data))
+    .catch(err => console.error("Failed to load data:", err))
+    .finally(() => setLoading(false));
   }, []);
 
   const getAllStudents = (): Student[] =>

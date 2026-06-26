@@ -30,7 +30,7 @@ function App() {
   return (
     <AuthProvider>
       <DataProvider>
-        <Router>
+        <Router basename={import.meta.env.BASE_URL}>
           <Routes>
             {/* Public routes — có Layout chung */}
             <Route element={<Layout />}>

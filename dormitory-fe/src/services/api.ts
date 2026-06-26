@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: 'https://ktx-cht-be.onrender.com',
 });
 
 api.interceptors.request.use(config => {
@@ -15,11 +15,17 @@ api.interceptors.response.use(
   err => {
     if (err.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      window.location.href = `${import.meta.env.BASE_URL}login`;
     }
     return Promise.reject(err);
   }
 );
+
+import type { DormitoryData } from "../types";
+
+export const overviewApi = {
+  get: () => api.get<DormitoryData>("/overview"),
+};
 
 // Auth
 export const authApi = {
