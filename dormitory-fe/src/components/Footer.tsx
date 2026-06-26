@@ -73,8 +73,8 @@ export default function Footer() {
               <ClockIcon className="w-4 h-4 mt-0.5 text-amber-300 shrink-0" />
               <div className="text-blue-200/70 leading-relaxed">
                 {/* TODO: thay bằng giờ thật */}
-                <p>Thứ 2 – Thứ 6: [07:00 – 17:00]</p>
-                <p>Thứ 7: [07:00 – 11:30]</p>
+                <p>Thứ 2 – Thứ 6: 07:00 – 17:00</p>
+                <p>Thứ 7: 07:00 – 11:30</p>
               </div>
             </div>
           </div>
