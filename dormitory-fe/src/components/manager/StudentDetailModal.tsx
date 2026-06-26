@@ -151,7 +151,7 @@ export default function StudentDetailModal({
                     </div>
 
                     {v.created_at && (
-                      <div className="text-xs text-slate-400 mt-1">
+                      <div className="text-sm text-slate-400 mt-1">
                         {new Date(v.created_at).toLocaleString()}
                       </div>
                     )}
@@ -179,7 +179,7 @@ function InfoCard({
 }) {
   return (
     <div className="bg-slate-50 rounded-lg p-3">
-      <div className="text-xs text-slate-400 mb-1">
+      <div className="text-sm text-slate-400 mb-1">
         {label}
       </div>
 

@@ -91,7 +91,7 @@ export default function Profile() {
 
         <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
           <div className="bg-slate-50 rounded-lg p-4">
-            <div className="text-xs text-slate-400 mb-1">
+            <div className="text-sm text-slate-400 mb-1">
               Tên đăng nhập
             </div>
 
@@ -101,7 +101,7 @@ export default function Profile() {
           </div>
 
           <div className="bg-slate-50 rounded-lg p-4">
-            <div className="text-xs text-slate-400 mb-1">
+            <div className="text-sm text-slate-400 mb-1">
               Vai trò
             </div>
 

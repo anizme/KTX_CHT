@@ -65,12 +65,12 @@ export default function ViolationModal({ student, onClose }: Props) {
               <div className="flex justify-between items-start">
                 <div>
                   <div className="font-medium">{v.title}</div>
-                  <div className="text-slate-500 text-xs mt-0.5">{v.violation_date?.slice(0, 10)}</div>
+                  <div className="text-slate-500 text-sm mt-0.5">{v.violation_date?.slice(0, 10)}</div>
                   {v.description && <div className="text-slate-600 mt-1">{v.description}</div>}
                 </div>
                 <div className="flex gap-2 shrink-0 ml-2">
-                  <button onClick={() => openEdit(v)} className="text-blue-500 hover:underline text-xs">Sửa</button>
-                  <button onClick={() => handleDelete(v)} className="text-red-500 hover:underline text-xs">Xóa</button>
+                  <button onClick={() => openEdit(v)} className="text-blue-500 hover:underline text-sm">Sửa</button>
+                  <button onClick={() => handleDelete(v)} className="text-red-500 hover:underline text-sm">Xóa</button>
                 </div>
               </div>
             </div>

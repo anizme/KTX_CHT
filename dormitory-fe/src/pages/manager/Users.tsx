@@ -63,13 +63,13 @@ export default function Users() {
                 <td className="px-4 py-3">
                   <select value={u.role}
                     onChange={e => handleChangeRole(u, e.target.value)}
-                    className="rounded border border-slate-200 px-2 py-1 text-xs bg-white">
+                    className="rounded border border-slate-200 px-2 py-1 text-sm bg-white">
                     {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
                   </select>
                 </td>
                 <td className="px-4 py-3">
                   <button onClick={() => handleDelete(u)}
-                    className="text-red-500 hover:underline text-xs">Xóa</button>
+                    className="text-red-500 hover:underline text-sm">Xóa</button>
                 </td>
               </tr>
             ))}

@@ -340,7 +340,7 @@ export default function Students() {
                   <td className="px-4 py-3">{GENDER_LABELS[s.gender as 'MALE'|'FEMALE'] ?? s.gender}</td>
                   <td className="px-4 py-3">{s.class_name}</td>
                   <td className="px-4 py-3">{s.hometown}</td>
-                  <td className="px-4 py-3 font-mono text-xs">
+                  <td className="px-4 py-3 font-mono text-sm">
                     {s.room_label
                       ? `${s.building_code} - T${s.floor_number} - P${s.room_label}`
                       : <span className="text-slate-400">Chưa xếp</span>}
@@ -354,25 +354,25 @@ export default function Students() {
                     <div className="flex gap-2 flex-wrap">
                       <button
                         onClick={e => { e.stopPropagation(); openEdit(s); }}
-                        className="px-2.5 py-1 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs font-medium border border-blue-200"
+                        className="px-2.5 py-1 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 text-sm font-medium border border-blue-200"
                       >
                         Sửa
                       </button>
                       <button
                         onClick={e => { e.stopPropagation(); setAssignTarget(s); }}
-                        className="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-xs font-medium border border-emerald-200"
+                        className="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-sm font-medium border border-emerald-200"
                       >
                         Xếp phòng
                       </button>
                       <button
                         onClick={e => { e.stopPropagation(); setViolationTarget(s); }}
-                        className="px-2.5 py-1 rounded-md bg-orange-50 text-orange-500 hover:bg-orange-100 text-xs font-medium border border-orange-200"
+                        className="px-2.5 py-1 rounded-md bg-orange-50 text-orange-500 hover:bg-orange-100 text-sm font-medium border border-orange-200"
                       >
                         Vi phạm
                       </button>
                       <button
                         onClick={e => { e.stopPropagation(); handleDelete(s); }}
-                        className="px-2.5 py-1 rounded-md bg-red-50 text-red-500 hover:bg-red-100 text-xs font-medium border border-red-200"
+                        className="px-2.5 py-1 rounded-md bg-red-50 text-red-500 hover:bg-red-100 text-sm font-medium border border-red-200"
                       >
                         Xóa
                       </button>

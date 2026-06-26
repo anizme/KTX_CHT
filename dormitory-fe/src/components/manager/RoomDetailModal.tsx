@@ -34,21 +34,21 @@ export default function RoomDetailModal({ room, onClose }: Props) {
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div className="bg-slate-50 rounded-lg p-3">
-              <div className="text-xs text-slate-400 mb-0.5">Loại phòng</div>
+              <div className="text-sm text-slate-400 mb-0.5">Loại phòng</div>
               <div className="font-medium">{detail.type}</div>
             </div>
             <div className="bg-slate-50 rounded-lg p-3">
-              <div className="text-xs text-slate-400 mb-0.5">Sức chứa</div>
+              <div className="text-sm text-slate-400 mb-0.5">Sức chứa</div>
               <div className="font-medium">{detail.occupancy} / {detail.capacity}</div>
             </div>
             <div className="bg-slate-50 rounded-lg p-3">
-              <div className="text-xs text-slate-400 mb-0.5">Còn trống</div>
+              <div className="text-sm text-slate-400 mb-0.5">Còn trống</div>
               <div className={`font-medium ${detail.available_slots === 0 ? 'text-red-500' : 'text-emerald-600'}`}>
                 {detail.available_slots} chỗ
               </div>
             </div>
             <div className="bg-slate-50 rounded-lg p-3">
-              <div className="text-xs text-slate-400 mb-0.5">Mã phòng</div>
+              <div className="text-sm text-slate-400 mb-0.5">Mã phòng</div>
               <div className="font-mono font-medium">{detail.code}</div>
             </div>
           </div>
@@ -63,12 +63,12 @@ export default function RoomDetailModal({ room, onClose }: Props) {
                   <div key={s.id} className="flex justify-between items-center border rounded-lg px-3 py-2 text-sm">
                     <div>
                       <span className="font-medium">{s.full_name}</span>
-                      <span className="text-xs text-slate-400 ml-2">
+                      <span className="text-sm text-slate-400 ml-2">
                         {GENDER_LABELS[s.gender as 'MALE'|'FEMALE'] ?? s.gender} - {s.class_name}
                       </span>
                     </div>
                     {s.violation_count > 0 && (
-                      <span className="text-xs text-red-500 font-medium">{s.violation_count} vi phạm</span>
+                      <span className="text-sm text-red-500 font-medium">{s.violation_count} vi phạm</span>
                     )}
                   </div>
                 ))}

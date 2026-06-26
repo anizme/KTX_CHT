@@ -48,7 +48,7 @@ export default function StudentForm({ initial, onSave, onCancel }: Props) {
     <div className="space-y-3">
       {/* Giới tính — riêng vì là select */}
       <div>
-        <label className="block text-xs font-medium text-slate-500 mb-1">
+        <label className="block text-sm font-medium text-slate-500 mb-1">
           Giới tính <span className="text-red-400">*</span>
         </label>
         <select value={form.gender}
@@ -61,7 +61,7 @@ export default function StudentForm({ initial, onSave, onCancel }: Props) {
 
       {FIELDS.map(({ key, label, type, required }) => (
         <div key={key}>
-          <label className="block text-xs font-medium text-slate-500 mb-1">
+          <label className="block text-sm font-medium text-slate-500 mb-1">
             {label} {required && <span className="text-red-400">*</span>}
           </label>
           {key === 'note' ? (

@@ -115,7 +115,7 @@ export default function Rooms() {
               }`}>
               <div>
                 <span className="font-medium">{b.code}</span>
-                <span className="text-xs opacity-70 ml-2">{b.occupancy} HS - còn {b.available_slots} chỗ</span>
+                <span className="text-sm opacity-70 ml-2">{b.occupancy} HS - còn {b.available_slots} chỗ</span>
               </div>
               <button onClick={e => { e.stopPropagation(); handleDeleteBuilding(b.id, b.code); }}
                 className="ml-1 opacity-50 hover:opacity-100 text-red-400">✕</button>
@@ -144,7 +144,7 @@ export default function Rooms() {
                 }`}>
                 <div>
                   <span className="font-medium">Tầng {f.number}</span>
-                  <span className="text-xs opacity-70 ml-2">{f.occupancy} HS - còn {f.available_slots} chỗ</span>
+                  <span className="text-sm opacity-70 ml-2">{f.occupancy} HS - còn {f.available_slots} chỗ</span>
                 </div>
                 <button onClick={e => { e.stopPropagation(); handleDeleteFloor(f.id, f.number); }}
                   className="ml-1 opacity-50 hover:opacity-100 text-red-400">✕</button>
@@ -172,19 +172,19 @@ export default function Rooms() {
                 onClick={() => setDetailRoom(r)}
                 className="border rounded-lg p-3 text-center text-base hover:bg-blue-50 cursor-pointer transition">
                 <div className="font-mono font-semibold">{r.label}</div>
-                <div className={`text-xs mt-0.5 font-medium ${ROOM_TYPE_COLORS[r.type] ?? 'text-slate-400'}`}>
+                <div className={`text-sm mt-0.5 font-medium ${ROOM_TYPE_COLORS[r.type] ?? 'text-slate-400'}`}>
                   {ROOM_TYPE_LABELS[r.type] ?? r.type}
                 </div>
                 {r.type === 'DORM' && (
-                  <div className="text-xs text-slate-400 mt-0.5">
+                  <div className="text-sm text-slate-400 mt-0.5">
                     {r.occupancy}/{r.capacity} - còn {r.available_slots}
                   </div>
                 )}
                 <div className="flex justify-center gap-2 mt-2" onClick={e => e.stopPropagation()}>
                   <button onClick={() => { setEditRoom(r); setEditRoomData({ type: r.type, capacity: r.capacity }); }}
-                    className="text-blue-500 hover:underline text-xs">Sửa</button>
+                    className="text-blue-500 hover:underline text-sm">Sửa</button>
                   <button onClick={() => handleDeleteRoom(r)}
-                    className="text-red-500 hover:underline text-xs">Xóa</button>
+                    className="text-red-500 hover:underline text-sm">Xóa</button>
                 </div>
               </div>
             ))}

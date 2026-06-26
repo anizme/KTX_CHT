@@ -100,8 +100,8 @@ export default function AutoAssignModal({ studentIds, buildings, onClose, onDone
           {result.unassigned_students.length > 0 && (
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-700">
               <div className="font-medium mb-1">Học sinh chưa xếp được (mã):</div>
-              <div className="text-xs">{result.unassigned_students.join(', ')}</div>
-              <div className="text-xs mt-1 opacity-75">Có thể do không đủ phòng hoặc không phù hợp giới tính.</div>
+              <div className="text-sm">{result.unassigned_students.join(', ')}</div>
+              <div className="text-sm mt-1 opacity-75">Có thể do không đủ phòng hoặc không phù hợp giới tính.</div>
             </div>
           )}
 
@@ -121,13 +121,13 @@ export default function AutoAssignModal({ studentIds, buildings, onClose, onDone
           {/* Phòng đã chọn — hiển thị persistent dù đổi tầng */}
           {selectedRooms.length > 0 && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <div className="text-xs font-medium text-blue-700 mb-2">
+              <div className="text-sm font-medium text-blue-700 mb-2">
                 Phòng đã chọn ({selectedRooms.length}):
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {selectedRooms.map(r => (
                   <span key={r.id}
-                    className="inline-flex items-center gap-1 bg-white border border-blue-300 text-blue-700 text-xs rounded-full px-2 py-0.5">
+                    className="inline-flex items-center gap-1 bg-white border border-blue-300 text-blue-700 text-sm rounded-full px-2 py-0.5">
                     <span className="font-mono font-semibold">{r.code ?? r.label}</span>
                     <span className="text-blue-400">({r.available_slots} chỗ)</span>
                     <button onClick={() => removeSelected(r.id)}
@@ -154,17 +154,17 @@ export default function AutoAssignModal({ studentIds, buildings, onClose, onDone
           {rooms.length > 0 && (
             <div>
               <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-medium text-slate-500">
+                <span className="text-sm font-medium text-slate-500">
                   Phòng còn chỗ tầng này ({rooms.length})
                 </span>
-                <button onClick={toggleAllRooms} className="text-xs text-blue-600 hover:underline">
+                <button onClick={toggleAllRooms} className="text-sm text-blue-600 hover:underline">
                   {rooms.every(r => isSelected(r.id)) ? 'Bỏ chọn tất cả' : 'Chọn tất cả'}
                 </button>
               </div>
               <div className="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto">
                 {rooms.map(r => (
                   <label key={r.id}
-                    className={`flex items-center gap-2 border rounded-lg px-2 py-1.5 text-xs cursor-pointer transition ${
+                    className={`flex items-center gap-2 border rounded-lg px-2 py-1.5 text-sm cursor-pointer transition ${
                       isSelected(r.id)
                         ? 'bg-blue-50 border-blue-400'
                         : 'hover:bg-slate-50 border-slate-200'
