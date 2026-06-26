@@ -7,5 +7,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: '/<TEN_REPO>/',
+  base: '/<KTX_CHT>/',
 })
