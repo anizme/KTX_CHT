@@ -12,7 +12,6 @@ import Login from './pages/Login';
 
 import Students from './pages/manager/Students';
 import Rooms from './pages/manager/Rooms';
-import Violations from './pages/manager/Violations';
 import Users from './pages/manager/Users';
 import Profile from './pages/manager/Profile';
 
@@ -51,7 +50,6 @@ function App() {
               <Route index element={<Navigate to="students" replace />} />
               <Route path="students"   element={<Students />} />
               <Route path="rooms"      element={<Rooms />} />
-              <Route path="violations" element={<Violations />} />
               <Route path="users"      element={
                 <RequireAdmin>
                   <Users />

@@ -18,7 +18,7 @@ export default function Profile() {
   const [saving, setSaving] = useState(false);
 
   const inputCls =
-    'w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none';
+    'w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none';
 
   const handleChangePassword = async () => {
     setError('');
@@ -120,7 +120,7 @@ export default function Profile() {
 
         <div className="space-y-4 max-w-lg mx-auto">
           <div>
-            <label className="block text-sm text-slate-600 mb-1">
+            <label className="block text-base text-slate-600 mb-1">
               Mật khẩu cũ
             </label>
 
@@ -138,7 +138,7 @@ export default function Profile() {
           </div>
 
           <div>
-            <label className="block text-sm text-slate-600 mb-1">
+            <label className="block text-base text-slate-600 mb-1">
               Mật khẩu mới
             </label>
 
@@ -156,7 +156,7 @@ export default function Profile() {
           </div>
 
           <div>
-            <label className="block text-sm text-slate-600 mb-1">
+            <label className="block text-base text-slate-600 mb-1">
               Xác nhận mật khẩu mới
             </label>
 
@@ -174,13 +174,13 @@ export default function Profile() {
           </div>
 
           {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">
+            <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-base text-red-600">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-600">
+            <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-base text-emerald-600">
               {success}
             </div>
           )}
@@ -189,7 +189,7 @@ export default function Profile() {
             <button
               onClick={handleChangePassword}
               disabled={saving}
-              className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-blue-600 text-white px-5 py-2 rounded-lg text-base font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? 'Đang xử lý...' : 'Đổi mật khẩu'}
             </button>

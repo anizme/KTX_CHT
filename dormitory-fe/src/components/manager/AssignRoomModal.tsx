@@ -17,6 +17,7 @@ export default function AssignRoomModal({ student, buildings, onClose, onDone }:
   const [selFloor, setSelFloor]       = useState('');
   const [selRoom, setSelRoom]         = useState('');
   const [saving, setSaving]   = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (selBuilding) floorApi.list(Number(selBuilding)).then(r => { setFloors(r.data); setSelFloor(''); setRooms([]); });
@@ -31,6 +32,11 @@ export default function AssignRoomModal({ student, buildings, onClose, onDone }:
     try {
       await studentApi.assignRoom(student.id, selRoom ? Number(selRoom) : null);
       onDone();
+    } catch (err: any) {
+      setError(
+        err.response?.data?.detail ??
+        'Không thể xếp phòng.'
+      );
     } finally { setSaving(false); }
   };
 
@@ -38,6 +44,11 @@ export default function AssignRoomModal({ student, buildings, onClose, onDone }:
 
   return (
     <Modal open title={`Xếp phòng: ${student.full_name}`} onClose={onClose}>
+      {error && (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          {error}
+        </div>
+      )}
       <div className="space-y-3">
         {student.room_id && (
           <div className="text-sm text-slate-500 bg-slate-50 rounded-lg px-3 py-2">

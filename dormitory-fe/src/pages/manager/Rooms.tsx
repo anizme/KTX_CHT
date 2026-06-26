@@ -90,7 +90,7 @@ export default function Rooms() {
     await roomApi.delete(r.id); loadRooms(selFloor);
   };
 
-  const inputCls = 'rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none w-full';
+  const inputCls = 'rounded-lg border border-slate-200 bg-white px-3 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none w-full';
 
   return (
     <div className="space-y-6">
@@ -101,14 +101,14 @@ export default function Rooms() {
         <div className="flex justify-between items-center mb-3">
           <h2 className="font-semibold text-slate-700">Tòa nhà</h2>
           <button onClick={() => setAddBuilding(true)}
-            className="text-sm bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700">
+            className="text-base bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700">
             + Thêm tòa
           </button>
         </div>
         <div className="flex flex-wrap gap-2">
           {buildings.map(b => (
             <div key={b.id} onClick={() => setSelBuilding(String(b.id))}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer text-sm transition ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer text-base transition ${
                 selBuilding === String(b.id)
                   ? 'bg-blue-600 text-white border-blue-600'
                   : 'hover:bg-slate-50 border-slate-200'
@@ -130,14 +130,14 @@ export default function Rooms() {
           <div className="flex justify-between items-center mb-3">
             <h2 className="font-semibold text-slate-700">Tầng</h2>
             <button onClick={() => setAddFloor(true)}
-              className="text-sm bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700">
+              className="text-base bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700">
               + Thêm tầng
             </button>
           </div>
           <div className="flex flex-wrap gap-2">
             {floors.map(f => (
               <div key={f.id} onClick={() => setSelFloor(String(f.id))}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer text-sm transition ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg border cursor-pointer text-base transition ${
                   selFloor === String(f.id)
                     ? 'bg-blue-600 text-white border-blue-600'
                     : 'hover:bg-slate-50 border-slate-200'
@@ -159,10 +159,10 @@ export default function Rooms() {
         <div className="bg-white rounded-xl border shadow-sm p-5">
           <div className="flex justify-between items-center mb-3">
             <h2 className="font-semibold text-slate-700">
-              Phòng <span className="text-slate-400 font-normal text-sm">({rooms.length})</span>
+              Phòng <span className="text-slate-400 font-normal text-base">({rooms.length})</span>
             </h2>
             <button onClick={() => setAddRoom(true)}
-              className="text-sm bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700">
+              className="text-base bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700">
               + Thêm phòng
             </button>
           </div>
@@ -170,7 +170,7 @@ export default function Rooms() {
             {rooms.map(r => (
               <div key={r.id}
                 onClick={() => setDetailRoom(r)}
-                className="border rounded-lg p-3 text-center text-sm hover:bg-blue-50 cursor-pointer transition">
+                className="border rounded-lg p-3 text-center text-base hover:bg-blue-50 cursor-pointer transition">
                 <div className="font-mono font-semibold">{r.label}</div>
                 <div className={`text-xs mt-0.5 font-medium ${ROOM_TYPE_COLORS[r.type] ?? 'text-slate-400'}`}>
                   {ROOM_TYPE_LABELS[r.type] ?? r.type}
@@ -198,8 +198,8 @@ export default function Rooms() {
           <input placeholder="Mã tòa (VD: NT1)" value={newBuildingCode}
             onChange={e => setNewBuildingCode(e.target.value)} className={inputCls} />
           <div className="flex justify-end gap-2">
-            <button onClick={() => setAddBuilding(false)} className="px-4 py-2 rounded-lg border text-sm">Hủy</button>
-            <button onClick={handleAddBuilding} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm">Thêm</button>
+            <button onClick={() => setAddBuilding(false)} className="px-4 py-2 rounded-lg border text-base">Hủy</button>
+            <button onClick={handleAddBuilding} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-base">Thêm</button>
           </div>
         </div>
       </Modal>
@@ -209,8 +209,8 @@ export default function Rooms() {
           <input type="number" placeholder="Số tầng" value={newFloorNum}
             onChange={e => setNewFloorNum(e.target.value)} className={inputCls} />
           <div className="flex justify-end gap-2">
-            <button onClick={() => setAddFloor(false)} className="px-4 py-2 rounded-lg border text-sm">Hủy</button>
-            <button onClick={handleAddFloor} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm">Thêm</button>
+            <button onClick={() => setAddFloor(false)} className="px-4 py-2 rounded-lg border text-base">Hủy</button>
+            <button onClick={handleAddFloor} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-base">Thêm</button>
           </div>
         </div>
       </Modal>
@@ -226,8 +226,8 @@ export default function Rooms() {
           <input type="number" placeholder="Sức chứa" value={newRoom.capacity}
             onChange={e => setNewRoom({ ...newRoom, capacity: Number(e.target.value) })} className={inputCls} />
           <div className="flex justify-end gap-2">
-            <button onClick={() => setAddRoom(false)} className="px-4 py-2 rounded-lg border text-sm">Hủy</button>
-            <button onClick={handleAddRoom} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm">Thêm</button>
+            <button onClick={() => setAddRoom(false)} className="px-4 py-2 rounded-lg border text-base">Hủy</button>
+            <button onClick={handleAddRoom} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-base">Thêm</button>
           </div>
         </div>
       </Modal>
@@ -241,8 +241,8 @@ export default function Rooms() {
           <input type="number" placeholder="Sức chứa" value={editRoomData.capacity}
             onChange={e => setEditRoomData({ ...editRoomData, capacity: Number(e.target.value) })} className={inputCls} />
           <div className="flex justify-end gap-2">
-            <button onClick={() => setEditRoom(null)} className="px-4 py-2 rounded-lg border text-sm">Hủy</button>
-            <button onClick={handleUpdateRoom} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm">Lưu</button>
+            <button onClick={() => setEditRoom(null)} className="px-4 py-2 rounded-lg border text-base">Hủy</button>
+            <button onClick={handleUpdateRoom} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-base">Lưu</button>
           </div>
         </div>
       </Modal>

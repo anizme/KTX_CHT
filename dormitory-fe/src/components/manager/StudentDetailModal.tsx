@@ -18,7 +18,7 @@ interface StudentDetailData {
   hometown: string;
 
   phone?: string;
-  citizen_id?: string;
+  parent_phone?: string;
 
   building_code?: string;
   floor_number?: number;
@@ -89,8 +89,8 @@ export default function StudentDetailModal({
             />
 
             <InfoCard
-              label="CCCD"
-              value={detail.citizen_id ?? '-'}
+              label="Số điện thoại phụ huynh"
+              value={detail.parent_phone ?? '-'}
             />
 
             <InfoCard

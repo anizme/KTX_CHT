@@ -15,7 +15,6 @@ import {
 const nav = [
   { to: '/manager/students', label: 'Học sinh', icon: UsersIcon },
   { to: '/manager/rooms', label: 'Phòng', icon: HomeModernIcon },
-  { to: '/manager/violations', label: 'Vi phạm', icon: ExclamationTriangleIcon },
 ];
 
 const adminNav = [
@@ -34,7 +33,7 @@ export default function ManagerLayout() {
   };
 
   const linkCls = ({ isActive }: { isActive: boolean }) =>
-    `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition ${
+    `flex items-center gap-3 px-3 py-2 rounded-lg text-base font-medium transition ${
       isActive
         ? 'bg-blue-700 text-white'
         : 'text-blue-100 hover:bg-blue-700/60'

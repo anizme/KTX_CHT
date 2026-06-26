@@ -34,8 +34,15 @@ export const authApi = {
 
 // Students
 export const studentApi = {
-  list: (filters?: Record<string, unknown>) =>
-    api.get<Student[]>('/students/public', { params: filters }),
+  list: (filters?: Record<string, unknown>) => {
+    const params = new URLSearchParams();
+    if (filters) {
+      for (const [k, v] of Object.entries(filters)) {
+        if (v !== undefined) params.append(k, String(v));
+      }
+    }
+    return api.get<Student[]>(`/students/public?${params.toString()}`);
+  },
   get: (id: number) => api.get<StudentDetail>(`/students/${id}`),
   create: (data: StudentCreate) => api.post<Student>('/students', data),
   update: (id: number, data: Partial<StudentCreate>) =>

@@ -196,6 +196,9 @@ def assign_room(
         ).count()
         if occupied >= room.capacity:
             raise HTTPException(status_code=400, detail="Phòng đã đầy")
+        if room.occupancy > 0:
+            if room.students[0].gender != student.gender:
+                raise HTTPException(status_code=400, detail="Phòng không phù hợp với giới tính của học sinh")
     student.room_id = room_id or None
     db.commit()
     db.refresh(student)
@@ -214,7 +217,7 @@ def can_assign(room: Room, student: Student) -> bool:
 
 def assign_student(room: Room, student: Student):
     student.room_id = room.id
-    room.students.append(student)
+    # room.students.append(student)
 
 
 
