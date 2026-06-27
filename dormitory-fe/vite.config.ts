@@ -8,4 +8,5 @@ export default defineConfig({
     tailwindcss(),
   ],
   base: '/KTX_CHT/',
+  envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
 })

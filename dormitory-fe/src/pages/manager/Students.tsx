@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { studentApi, buildingApi, floorApi } from '../../services/api';
-import type { Student, StudentDetail, StudentCreate, Building, Floor } from '../../services/api';
+import type { Student, StudentDetail, StudentCreate, Building, Floor, StudentPublicMetadata } from '../../services/api';
 import { GENDER_LABELS } from '../../types';
 import Modal from '../../components/manager/Modal';
 import StudentForm from '../../components/manager/StudentForm';
@@ -14,6 +14,11 @@ export default function Students() {
   const [loading, setLoading]     = useState(true);
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [floors, setFloors]       = useState<Floor[]>([]);
+  const [publicMetadata, setPublicMetadata] = useState<StudentPublicMetadata>({
+    class_names: [],
+    hometowns: [],
+    rooms: [],
+  });
 
   const [filterName, setFilterName]         = useState('');
   const [filterGender, setFilterGender]     = useState('');
@@ -42,16 +47,18 @@ export default function Students() {
       if (filterHometown) params.hometown     = filterHometown;
       if (filterBuilding) params.building_id  = filterBuilding;
       if (filterFloor)    params.floor_number = filterFloor;
+      if (filterRoom)     params.room_id     = filterRoom;
       if (filterAssignStatus === 'UNASSIGNED') params.room_id = 'null';
       else if (filterAssignStatus === 'ASSIGNED') {
         // BE không hỗ trợ filter "có phòng" trực tiếp → lọc client-side
       }
 
       const { data } = await studentApi.list(params);
-      let result = data;
+      setPublicMetadata(data.metadata);
+
+      let result = data.items;
       if (filterAssignStatus === 'ASSIGNED') result = result.filter(s => s.room_id !== null);
       if (filterName) result = result.filter(s => s.full_name.toLowerCase().includes(filterName.toLowerCase()));
-      if (filterRoom) result = result.filter(s => s.room_label?.toLowerCase().includes(filterRoom.toLowerCase()));
       setStudents(result);
     } finally {
       setLoading(false);
@@ -100,7 +107,7 @@ export default function Students() {
     }
   }, [filterBuilding]);
 
-  useEffect(() => { load(); }, [filterGender, filterBuilding, filterFloor]);
+  useEffect(() => { load(); }, [filterGender, filterClass, filterHometown, filterBuilding, filterFloor, filterRoom, filterAssignStatus]);
 
   const openCreate = () => { setEditing(null); setFormOpen(true); };
   const openEdit   = async (s: Student) => {
@@ -176,29 +183,44 @@ export default function Students() {
             className={inputCls}
           />
 
-          <input
-            placeholder="Lớp"
+          <select
             value={filterClass}
             onChange={e => setFilterClass(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && load()}
             className={inputCls}
-          />
+          >
+            <option value="">Tất cả lớp</option>
+            {publicMetadata.class_names.map(value => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
 
-          <input
-            placeholder="Quê quán"
+          <select
             value={filterHometown}
             onChange={e => setFilterHometown(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && load()}
             className={inputCls}
-          />
+          >
+            <option value="">Tất cả quê quán</option>
+            {publicMetadata.hometowns.map(value => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
 
-          <input
-            placeholder="Phòng"
+          <select
             value={filterRoom}
             onChange={e => setFilterRoom(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && load()}
             className={inputCls}
-          />
+          >
+            <option value="">Tất cả phòng</option>
+            {publicMetadata.rooms.map(room => (
+              <option key={room.id} value={room.id}>
+                {room.building_code} - Tầng {room.floor_number} - {room.label}
+              </option>
+            ))}
+          </select>
 
           <select
             value={filterAssignStatus}
@@ -246,6 +268,7 @@ export default function Students() {
               </option>
             ))}
           </select>
+
         </div>
       </div>
 

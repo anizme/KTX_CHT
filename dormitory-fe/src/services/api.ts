@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const baseURL = import.meta.env.NEXT_PUBLIC_API_URL ?? 'https://ktx-cht-be.onrender.com';
+
 export const api = axios.create({
-  baseURL: 'https://ktx-cht-be.onrender.com',
+  baseURL,
 });
 
 api.interceptors.request.use(config => {
@@ -47,7 +49,7 @@ export const studentApi = {
         if (v !== undefined) params.append(k, String(v));
       }
     }
-    return api.get<Student[]>(`/students/public?${params.toString()}`);
+    return api.get<StudentPublicResponse>(`/students/public?${params.toString()}`);
   },
   get: (id: number) => api.get<StudentDetail>(`/students/${id}`),
   create: (data: StudentCreate) => api.post<Student>('/students', data),
@@ -126,7 +128,19 @@ export const userApi = {
 export interface ApiUser { id: number; username: string; role: string; }
 export interface Building { id: number; code: string; occupancy: number; available_slots: number; }
 export interface Floor { id: number; building_id: number; number: number; code: string; occupancy: number; available_slots: number; }
-export interface Room { id: number; floor_id: number; building_id: number; label: string; code: string; type: string; capacity: number; occupancy: number; available_slots: number; }
+export interface Room {
+  id: number;
+  floor_id: number;
+  building_id: number;
+  label: string;
+  code: string;
+  floor_number: number;
+  building_code: string;
+  type: string;
+  capacity: number;
+  occupancy: number;
+  available_slots: number;
+}
 export interface Student { id: number; full_name: string; gender: string; hometown: string; class_name: string; violation_count: number; room_id: number | null; room_label: string; floor_number: number; building_code: string; }
 export interface StudentDetail extends Student { phone: string; parent_phone: string; note: string; violations: Violation[]; }
 export interface StudentCreate { full_name: string; gender: string; hometown: string; class_name: string; phone: string; parent_phone: string; note?: string; room_id?: number | null; }
@@ -134,3 +148,5 @@ export interface Violation { id: number; student_id: number; title: string; desc
 export interface ViolationCreate { student_id: number; title: string; description: string; violation_date: string; }
 export interface RoomCreate { label: string; floor_id: number; type: string; capacity: number; }
 export interface AutoAssignResult { assigned_students: number[]; unassigned_students: number[]; }
+export interface StudentPublicMetadata { class_names: string[]; hometowns: string[]; rooms: Room[]; }
+export interface StudentPublicResponse { items: Student[]; metadata: StudentPublicMetadata; }
