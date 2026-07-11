@@ -17,21 +17,22 @@ export default function Header() {
   };
 
   const navItems = [
-    { to: '/', label: 'Tổng quan', match: (p: string) => p === '/' },
-    { to: '/search', label: 'Tìm kiếm', match: (p: string) => p.startsWith('/search') },
-    ...(user
-      ? [{ to: '/manager', label: 'Quản lý', match: (p: string) => p.startsWith('/manager') }]
-      : []),
-  ];
+  { to: '/', label: 'Giới thiệu', match: (p: string) => p === '/' || p.startsWith('/noi-quy') },
+  { to: '/tong-quan', label: 'Tổng quan', match: (p: string) => p.startsWith('/tong-quan') },
+  { to: '/search', label: 'Tìm kiếm', match: (p: string) => p.startsWith('/search') },
+  ...(user
+    ? [{ to: '/manager', label: 'Quản lý', match: (p: string) => p.startsWith('/manager') }]
+    : []),
+];
 
   return (
     // <header className="relative overflow-hidden">
     <header className="sticky top-0 z-50 overflow-hidden">
       {/* Ảnh nền + overlay gradient */}
-      {/* <div
+      <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${COVER_IMAGE_URL})` }}
-      /> */}
+      />
       <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 via-blue-900/90 to-blue-800/80" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
 
@@ -49,10 +50,10 @@ export default function Header() {
             </div>
             <div className="leading-tight">
               <div className="text-white font-bold text-lg sm:text-xl tracking-tight">
-                KTX Chuyên Hà Tĩnh
+                Ký túc xá Chuyên Hà Tĩnh
               </div>
               <div className="text-blue-200/70 text-xs font-medium hidden sm:block">
-                Hệ thống quản lý ký túc xá
+                Hệ thống quản lý Ký túc xá trường THPT Chuyên Hà Tĩnh
               </div>
             </div>
           </Link>

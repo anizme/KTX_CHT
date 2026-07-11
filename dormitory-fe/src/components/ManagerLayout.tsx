@@ -10,21 +10,28 @@ import {
   ShieldCheckIcon,
   Bars3Icon,
   ChevronLeftIcon,
+  DocumentTextIcon,
+  TrophyIcon,
+  ArrowUpTrayIcon,
+  AcademicCapIcon,
 } from '@heroicons/react/24/outline';
 
 const nav = [
   { to: '/manager/students', label: 'Học sinh', icon: UsersIcon },
   { to: '/manager/rooms', label: 'Phòng', icon: HomeModernIcon },
+  { to: '/manager/pages', label: 'Nội dung', icon: DocumentTextIcon },
+  { to: '/manager/awards', label: 'Giải thưởng', icon: TrophyIcon },
+  { to: '/manager/import', label: 'Excel', icon: ArrowUpTrayIcon },
 ];
 
 const adminNav = [
+  { to: '/manager/academic', label: 'Năm học', icon: AcademicCapIcon },
   { to: '/manager/users', label: 'Tài khoản', icon: ShieldCheckIcon },
 ];
 
 export default function ManagerLayout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-
   const [collapsed, setCollapsed] = useState(false);
 
   const handleLogout = () => {
@@ -53,14 +60,10 @@ export default function ManagerLayout() {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           {!collapsed && (
-            <NavLink
-              to="/"
-              className="text-white font-bold text-xl px-2"
-            >
+            <NavLink to="/" className="text-white font-bold text-xl px-2">
               Quản lý KTX
             </NavLink>
           )}
-
           <button
             onClick={() => setCollapsed(v => !v)}
             className="text-white p-2 rounded-lg hover:bg-blue-700"
@@ -74,7 +77,7 @@ export default function ManagerLayout() {
         </div>
 
         {/* Menu */}
-        <div className="space-y-1">
+        <div className="space-y-1 overflow-y-auto">
           {nav.map(({ to, label, icon: Icon }) => (
             <NavLink key={to} to={to} className={linkCls}>
               <Icon className="w-5 h-5 shrink-0" />
@@ -87,7 +90,6 @@ export default function ManagerLayout() {
         {user?.role === 'admin' && (
           <>
             <div className="border-t border-blue-700 my-4" />
-
             <div className="space-y-1">
               {adminNav.map(({ to, label, icon: Icon }) => (
                 <NavLink key={to} to={to} className={linkCls}>
@@ -105,7 +107,6 @@ export default function ManagerLayout() {
             <UserCircleIcon className="w-5 h-5 shrink-0" />
             {!collapsed && <span>{user?.username}</span>}
           </NavLink>
-
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-blue-100 hover:bg-blue-700/60 w-full"

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'https://ktx-cht-be.onrender.com',
+  // baseURL: 'https://ktx-cht-be.onrender.com',
+  baseURL: 'http://localhost:8000',
 });
 
 api.interceptors.request.use(config => {
@@ -87,7 +88,7 @@ export const floorApi = {
 
 export const roomApi = {
   list: (floorId?: number) =>
-    api.get<Room[]>('/rooms', { params: { ...(floorId ? { floor_id: floorId } : {}), type: 'DORM' } }),
+    api.get<Room[]>('/rooms', { params: { ...(floorId ? { floor_id: floorId } : {}), type: 'Phòng ở' } }),
   listAll: (floorId?: number) =>
     api.get<Room[]>('/rooms', { params: floorId ? { floor_id: floorId } : {} }),
   get: (id: number) => api.get(`/rooms/${id}`),
@@ -120,6 +121,77 @@ export const userApi = {
     api.patch('/users/me/password', { old_password: oldPassword, new_password: newPassword }),
 };
 
+import type {
+  Post, PostCreate, PostType,
+  AwardType, StudentAward, StudentAwardCreate,
+  AwardDistributionItem, OccupancyByBuildingItem,
+  GradeDistributionItem, ViolationDistributionItem, GenderDistribution,
+  SchoolYearStatisticOut, PromotionResult,
+} from '../types';
+
+import type { Page, PageType, PageUpdateInput } from '../types';
+
+export const pageApi = {
+  get: (pageType: PageType) => api.get<Page>(`/pages/${encodeURIComponent(pageType)}`),
+  update: (pageType: PageType, data: PageUpdateInput) =>
+    api.put<Page>(`/pages/${encodeURIComponent(pageType)}`, data),
+};
+
+// Award types (danh mục)
+export const awardTypeApi = {
+  list: () => api.get<AwardType[]>('/awards/types'),
+  create: (name: string) => api.post<AwardType>('/awards/types', { name }),
+  delete: (id: number) => api.delete(`/awards/types/${id}`),
+};
+
+// Student awards (tấm gương tiêu biểu)
+export const studentAwardApi = {
+  list: (filters?: { award_year?: number; award_type_id?: number }) =>
+    api.get<StudentAward[]>('/awards/students', { params: filters || {} }),
+  create: (data: StudentAwardCreate) => api.post<StudentAward>('/awards/students', data),
+  update: (id: number, data: Partial<StudentAwardCreate>) =>
+    api.patch<StudentAward>(`/awards/students/${id}`, data),
+  delete: (id: number) => api.delete(`/awards/students/${id}`),
+};
+
+// Public statistics
+export const statisticsApi = {
+  awardDistribution: () => api.get<AwardDistributionItem[]>('/statistics/award-distribution'),
+  occupancyByBuilding: () => api.get<OccupancyByBuildingItem[]>('/statistics/occupancy-by-building'),
+  genderDistribution: () => api.get<GenderDistribution>('/statistics/gender-distribution'),
+  gradeDistribution: () => api.get<GradeDistributionItem[]>('/statistics/grade-distribution'),
+  violationDistribution: () => api.get<ViolationDistributionItem[]>('/statistics/violation-distribution'),
+};
+
+// Academic (năm học)
+export const academicApi = {
+  currentYear: () => api.get<{ school_year: number }>('/academic/current-year'),
+  promote: () => api.post<PromotionResult>('/academic/promote'),
+  yearStatistics: () => api.get<SchoolYearStatisticOut[]>('/academic/statistics'),
+};
+
+// Excel import
+export const importApi = {
+  preview: (file: File, columnMapping: Record<string, string>) => {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('column_mapping', JSON.stringify(columnMapping));
+    return api.post('/import/students/preview', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  commit: (file: File, columnMapping: Record<string, string>) => {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('column_mapping', JSON.stringify(columnMapping));
+    return api.post<{ created_count: number; created_ids: number[]; errors: { row: number; error: string }[] }>(
+      '/import/students/commit', form, { headers: { 'Content-Type': 'multipart/form-data' } }
+    );
+  },
+  exportStudents: () =>
+    api.get('/students/export/excel', { responseType: 'blob' }),
+
+};
 
 
 // --- Local types for API layer ---

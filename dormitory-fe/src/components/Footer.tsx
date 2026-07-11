@@ -18,12 +18,12 @@ export default function Footer() {
               </div>
               <div className="leading-tight">
                 <div className="text-white font-bold text-base tracking-tight">
-                  KTX Chuyên Hà Tĩnh
+                  Ký túc xá Chuyên Hà Tĩnh
                 </div>
               </div>
             </Link>
             <p className="text-sm text-blue-200/60 mt-3 leading-relaxed">
-              Hệ thống quản lý ký túc xá.
+              Hệ thống quản lý Ký túc xá Trường THPT Chuyên Hà Tĩnh.
             </p>
           </div>
 
@@ -82,7 +82,7 @@ export default function Footer() {
 
         {/* Dòng cuối: copyright */}
         <div className="mt-8 pt-6 border-t border-white/10 text-center text-xs text-blue-200/50">
-          © {new Date().getFullYear()} KTX Chuyên Hà Tĩnh.
+          © {new Date().getFullYear()} Trường THPT Chuyên Hà Tĩnh.
         </div>
       </div>
     </footer>

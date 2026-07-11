@@ -22,6 +22,8 @@ export default function Students() {
   const [filterBuilding, setFilterBuilding] = useState('');
   const [filterFloor, setFilterFloor]       = useState('');
   const [filterRoom, setFilterRoom]         = useState('');
+  const [filterMinViolation, setFilterMinViolation] = useState('');
+  const [filterMaxViolation, setFilterMaxViolation] = useState('');
   const [autoAssignOpen, setAutoAssignOpen] = useState(false);
 
   const [formOpen, setFormOpen]               = useState(false);
@@ -52,6 +54,8 @@ export default function Students() {
       if (filterAssignStatus === 'ASSIGNED') result = result.filter(s => s.room_id !== null);
       if (filterName) result = result.filter(s => s.full_name.toLowerCase().includes(filterName.toLowerCase()));
       if (filterRoom) result = result.filter(s => s.room_label?.toLowerCase().includes(filterRoom.toLowerCase()));
+      if (filterMinViolation) result = result.filter(s => s.violation_count >= Number(filterMinViolation));
+      if (filterMaxViolation) result = result.filter(s => s.violation_count <= Number(filterMaxViolation));
       setStudents(result);
     } finally {
       setLoading(false);
@@ -149,6 +153,8 @@ export default function Students() {
     setFilterBuilding('');
     setFilterFloor('');
     setFilterRoom('');
+    setFilterMinViolation('');
+    setFilterMaxViolation('');
 
     setFloors([]);
     load();
@@ -196,6 +202,22 @@ export default function Students() {
             placeholder="Phòng"
             value={filterRoom}
             onChange={e => setFilterRoom(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && load()}
+            className={inputCls}
+          />
+          <input
+            type="number" min={0}
+            placeholder="Vi phạm từ"
+            value={filterMinViolation}
+            onChange={e => setFilterMinViolation(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && load()}
+            className={inputCls}
+          />
+          <input
+            type="number" min={0}
+            placeholder="Vi phạm đến"
+            value={filterMaxViolation}
+            onChange={e => setFilterMaxViolation(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && load()}
             className={inputCls}
           />

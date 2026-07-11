@@ -1,0 +1,160 @@
+/* Table */
+.rich-content table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 1rem 0;
+
+  border: 2px solid #94a3b8;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.rich-content table th,
+.rich-content table td {
+  border: 1.5px solid #94a3b8;
+  padding: 0.75rem 1rem;
+  vertical-align: top;
+  word-break: break-word;
+  position: relative;
+}
+
+.rich-content table th {
+  background: #e2e8f0;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.rich-content table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.rich-content table tbody tr:hover {
+  background: #eef4ff;
+}
+
+.rich-content table .selectedCell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(59, 130, 246, 0.15);
+  pointer-events: none;
+}
+
+.rich-content table .column-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 4px;
+  height: 100%;
+  background: #2563eb;
+  pointer-events: none;
+}
+
+.rich-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  margin: 1rem 0;
+  overflow: hidden;
+
+  border: 1px solid #dbe3ec;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Cell */
+.rich-content table th,
+.rich-content table td {
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem 1rem;
+  vertical-align: top;
+  position: relative;
+  word-break: break-word;
+}
+
+/* Remove last borders */
+.rich-content table tr:last-child td {
+  border-bottom: none;
+}
+
+.rich-content table th:last-child,
+.rich-content table td:last-child {
+  border-right: none;
+}
+
+/* Header */
+.rich-content table th {
+  background: #f8fafc;
+  color: #1e293b;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Zebra */
+.rich-content table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* Hover */
+.rich-content table tbody tr:hover {
+  background: #f1f5f9;
+}
+
+/* Selected cell (TipTap) */
+.rich-content table .selectedCell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(59, 130, 246, 0.12);
+  pointer-events: none;
+}
+
+/* Resize handle */
+.rich-content table .column-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 4px;
+  height: 100%;
+  background: #3b82f6;
+  pointer-events: none;
+}
+
+/* Responsive */
+.rich-content {
+  overflow-x: auto;
+}
+
+.rich-content figure { margin: 0.75rem 0; width: fit-content; max-width: 100%; }
+.rich-content figure img { max-width: 100%; border-radius: 0.5rem; display: block; margin: 0; }
+.rich-content figure figcaption { font-size: 0.85rem; color: #64748b; margin-top: 0.375rem; font-style: italic; text-align: center; }
+.rich-content figure.img-align-left { margin-left: 0; margin-right: auto; }
+.rich-content figure.img-align-center { margin-left: auto; margin-right: auto; }
+.rich-content figure.img-align-right { margin-left: auto; margin-right: 0; }
+
+.rich-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem;
+  line-height: 1.2;
+}
+
+.rich-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.rich-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+}
+
+.rich-content p {
+  margin: 0.75rem 0;
+  line-height: 1.7;
+}

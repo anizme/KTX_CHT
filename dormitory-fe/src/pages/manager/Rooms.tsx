@@ -4,12 +4,17 @@ import type { Building, Floor, Room } from '../../services/api';
 import Modal from '../../components/manager/Modal';
 import RoomDetailModal from '../../components/manager/RoomDetailModal';
 
-import { ROOM_TYPE_LABELS } from '../../types/index';
+import { ROOM_TYPES } from '../../types/index';
 
-const ROOM_TYPE_COLORS: Record<string, string> = {
-  DORM: 'text-blue-600', STUDY: 'text-emerald-600', CANTEEN: 'text-orange-500',
-  COMMON: 'text-purple-500', GUEST: 'text-cyan-500',
-  SUPERVISOR: 'text-rose-500', OFFICE: 'text-slate-500', OTHER: 'text-slate-400',
+const ROOM_TYPE_COLORS = {
+  'Phòng ở': 'text-blue-600',
+  'Phòng tự học': 'text-emerald-600',
+  'Nhà ăn': 'text-orange-500',
+  'Phòng sinh hoạt chung': 'text-purple-500',
+  'Phòng khách': 'text-cyan-500',
+  'Phòng quản sinh': 'text-rose-500',
+  'Phòng hành chính': 'text-slate-500',
+  'Khác': 'text-slate-400',
 };
 
 export default function Rooms() {
@@ -25,9 +30,9 @@ export default function Rooms() {
   const [addFloor, setAddFloor]         = useState(false);
   const [newFloorNum, setNewFloorNum]   = useState('');
   const [addRoom, setAddRoom]           = useState(false);
-  const [newRoom, setNewRoom]           = useState({ label: '', type: 'DORM', capacity: 6 });
+  const [newRoom, setNewRoom]           = useState({ label: '', type: 'Phòng ở', capacity: 6 });
   const [editRoom, setEditRoom]         = useState<Room | null>(null);
-  const [editRoomData, setEditRoomData] = useState({ type: 'DORM', capacity: 6 });
+  const [editRoomData, setEditRoomData] = useState({ type: 'Phòng ở', capacity: 6 });
 
   const loadBuildings = () => buildingApi.list().then(r => setBuildings(r.data));
   const loadRooms     = (floorId: string) =>
@@ -75,7 +80,7 @@ export default function Rooms() {
   const handleAddRoom = async () => {
     if (!selFloor || !newRoom.label) return;
     await roomApi.create({ ...newRoom, floor_id: Number(selFloor) });
-    setNewRoom({ label: '', type: 'DORM', capacity: 6 }); setAddRoom(false);
+    setNewRoom({ label: '', type: 'Phòng ở', capacity: 6 }); setAddRoom(false);
     loadRooms(selFloor);
   };
 
@@ -173,9 +178,9 @@ export default function Rooms() {
                 className="border rounded-lg p-3 text-center text-base hover:bg-blue-50 cursor-pointer transition">
                 <div className="font-mono font-semibold">{r.label}</div>
                 <div className={`text-sm mt-0.5 font-medium ${ROOM_TYPE_COLORS[r.type] ?? 'text-slate-400'}`}>
-                  {ROOM_TYPE_LABELS[r.type] ?? r.type}
+                  {r.type}
                 </div>
-                {r.type === 'DORM' && (
+                {r.type === 'Phòng ở' && (
                   <div className="text-sm text-slate-400 mt-0.5">
                     {r.occupancy}/{r.capacity} - còn {r.available_slots}
                   </div>
@@ -221,7 +226,11 @@ export default function Rooms() {
             onChange={e => setNewRoom({ ...newRoom, label: e.target.value })} className={inputCls} />
           <select value={newRoom.type}
             onChange={e => setNewRoom({ ...newRoom, type: e.target.value })} className={inputCls}>
-            {Object.entries(ROOM_TYPE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            {ROOM_TYPES.map(type => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
           <input type="number" placeholder="Sức chứa" value={newRoom.capacity}
             onChange={e => setNewRoom({ ...newRoom, capacity: Number(e.target.value) })} className={inputCls} />
@@ -236,7 +245,11 @@ export default function Rooms() {
         <div className="space-y-4">
           <select value={editRoomData.type}
             onChange={e => setEditRoomData({ ...editRoomData, type: e.target.value })} className={inputCls}>
-            {Object.entries(ROOM_TYPE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            {ROOM_TYPES.map(type => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
           <input type="number" placeholder="Sức chứa" value={editRoomData.capacity}
             onChange={e => setEditRoomData({ ...editRoomData, capacity: Number(e.target.value) })} className={inputCls} />

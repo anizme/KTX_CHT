@@ -6,20 +6,20 @@ export const GENDER_LABELS: Record<Gender, string> = {
 };
 
 export type RoomType =
-  | 'DORM' | 'STUDY' | 'CANTEEN'
-  | 'COMMON' | 'GUEST' | 'SUPERVISOR'
-  | 'OFFICE' | 'OTHER';
+  | 'Phòng ở' | 'Phòng tự học' | 'Nhà ăn'
+  | 'Phòng sinh hoạt chung' | 'Phòng khách' | 'Phòng quản sinh'
+  | 'Phòng hành chính' | 'Khác';
 
-export const ROOM_TYPE_LABELS: Record<RoomType, string> = {
-  DORM: 'Phòng ở',
-  STUDY: 'Phòng tự học',
-  CANTEEN: 'Nhà ăn',
-  COMMON: 'Phòng sinh hoạt chung',
-  GUEST: 'Phòng khách',
-  SUPERVISOR: 'Phòng quản sinh',
-  OFFICE: 'Phòng hành chính',
-  OTHER: 'Khác',
-};
+  export const ROOM_TYPES: RoomType[] = [
+  'Phòng ở',
+  'Phòng tự học',
+  'Nhà ăn',
+  'Phòng sinh hoạt chung',
+  'Phòng khách',
+  'Phòng quản sinh',
+  'Phòng hành chính',
+  'Khác',
+];
 
 export interface Building {
   id: number;
@@ -111,4 +111,66 @@ export interface LocationInfo {
   building: Building;
   floor: Floor;
   room: Room;
+}
+
+export type PageType = 'Giới thiệu' | 'Nội quy';
+export const PAGE_TYPES: { INTRO: PageType; RULE: PageType } = {
+  INTRO: 'Giới thiệu',
+  RULE: 'Nội quy',
+};
+export interface Page {
+  id: number;
+  page_type: PageType;
+  title: string;
+  content: string;
+  updated_at: string;
+  updated_by: number | null;
+}
+export interface PageUpdateInput {
+  title?: string;
+  content?: string;
+}
+// Awards
+export interface AwardType {
+  id: number;
+  name: string;
+}
+export interface StudentAward {
+  id: number;
+  student_id: number;
+  award_type_id: number;
+  award_year: number;
+  description?: string;
+  student: Student;
+  award_type: AwardType;
+}
+export interface StudentAwardCreate {
+  student_id: number;
+  award_type_id: number;
+  award_year?: number;
+  description?: string;
+}
+
+// Statistics (public)
+export interface AwardDistributionItem { award_type_id: number; award_name: string; student_count: number; }
+export interface OccupancyByBuildingItem { building_id: number; building_code: string; occupancy: number; capacity: number; available_slots: number; }
+export interface GradeDistributionItem { grade: number; count: number; }
+export interface ViolationDistributionItem { violation_count: number; student_count: number; }
+export type GenderDistribution = Record<string, number>;
+
+// Academic
+export interface SchoolYearStatisticAwardOut { award_type_id: number; quantity: number; award_type?: AwardType; }
+export interface SchoolYearStatisticOut {
+  id: number;
+  school_year: number;
+  school_year_display: string;
+  total_students: number;
+  special_note?: string;
+  awards: SchoolYearStatisticAwardOut[];
+}
+export interface PromotionResult {
+  school_year: number;
+  graduated_student_ids: number[];
+  promoted_count: number;
+  new_school_year: number;
 }
