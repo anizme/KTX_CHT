@@ -41,7 +41,7 @@ export default function Header() {
           {/* Logo / tên trường */}
           <Link to="/" className="flex items-center gap-3 group">
 
-            <div className="w-11 h-11 rounded-full overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 shrink-0">
+            <div className="w-11 h-12 rounded-full overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 shrink-0">
               <img
                 src={logoImage}
                 alt="CHT Logo"
@@ -49,10 +49,10 @@ export default function Header() {
               />
             </div>
             <div className="leading-tight">
-              <div className="text-white font-bold text-lg sm:text-xl tracking-tight">
+              <div className="text-white font-bold text-lg sm:text-2xl tracking-tight">
                 Ký túc xá Chuyên Hà Tĩnh
               </div>
-              <div className="text-blue-200/70 text-xs font-medium hidden sm:block">
+              <div className="text-blue-200/70 text-sm font-medium hidden sm:block">
                 Hệ thống quản lý Ký túc xá trường THPT Chuyên Hà Tĩnh
               </div>
             </div>
@@ -60,14 +60,14 @@ export default function Header() {
 
           {/* Nav */}
           <div className="flex items-center gap-1.5">
-            <nav className="flex items-center gap-1 bg-white/10 backdrop-blur-sm rounded-full p-1 border border-white/10">
+            <nav className="flex items-center gap-1 bg-white/10 backdrop-blur-sm rounded-full p-2 border border-white/10">
               {navItems.map(item => {
                 const active = item.match(location.pathname);
                 return (
                   <Link
                     key={item.to}
                     to={item.to}
-                    className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                    className={`px-4 py-1.5 rounded-full text-base font-medium transition-all ${
                       active
                         ? 'bg-white text-blue-900 shadow-sm'
                         : 'text-blue-100/80 hover:text-white hover:bg-white/10'
@@ -84,14 +84,14 @@ export default function Header() {
             {user ? (
               <button
                 onClick={handleLogout}
-                className="px-4 py-1.5 rounded-full text-sm font-medium text-blue-100/80 hover:text-white hover:bg-white/10 transition-all"
+                className="px-4 py-1.5 rounded-full text-base font-medium text-blue-100/80 hover:text-white hover:bg-white/10 transition-all"
               >
                 Đăng xuất
               </button>
             ) : (
               <Link
                 to="/login"
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                className={`px-4 py-1.5 rounded-full text-base font-medium transition-all ${
                   location.pathname === '/login'
                     ? 'bg-amber-400 text-blue-950 shadow-sm'
                     : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
