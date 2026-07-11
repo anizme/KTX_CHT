@@ -85,7 +85,7 @@ export default function Academic() {
 
       <div className="bg-white rounded-xl shadow-sm border p-5 mb-6">
         <p className="text-slate-600 mb-1">Năm học hiện tại</p>
-        <p className="text-3xl font-bold text-blue-700 mb-4">{currentYear}</p>
+        <p className="text-3xl font-bold text-blue-700 mb-4">{currentYear} - {currentYear + 1}</p>
 
         {!preview ? (
           <button
@@ -105,7 +105,7 @@ export default function Academic() {
             </ul>
             {preview.awardCounts.length > 0 && (
               <div className="text-sm text-slate-600 mb-3">
-                <p className="font-medium mb-1">Giải thưởng sẽ được chốt vào năm học {currentYear}:</p>
+                <p className="font-medium mb-1">Giải thưởng sẽ được chốt vào năm học {currentYear} - {currentYear + 1}:</p>
                 <ul className="list-disc pl-5 space-y-0.5">
                   {preview.awardCounts.map(a => <li key={a.name}>{a.name}: {a.count}</li>)}
                 </ul>
