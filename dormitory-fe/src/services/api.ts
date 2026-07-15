@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  // baseURL: 'https://ktx-cht-be.onrender.com',
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://ktx-cht-be.onrender.com',
+  // baseURL: 'http://localhost:8000',
 });
 
 api.interceptors.request.use(config => {
