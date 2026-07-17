@@ -26,7 +26,7 @@ const FIELDS: Field[] = [
 export default function StudentForm({ initial, onSave, onCancel }: Props) {
   const [form, setForm] = useState<StudentCreate>({
     full_name:    initial?.full_name    ?? '',
-    gender:       initial?.gender       ?? 'MALE',
+    gender:       initial?.gender       ?? 'Nam',
     hometown:     initial?.hometown     ?? '',
     class_name:   initial?.class_name   ?? '',
     phone:        initial?.phone        ?? '',
@@ -54,8 +54,8 @@ export default function StudentForm({ initial, onSave, onCancel }: Props) {
         <select value={form.gender}
           onChange={e => setForm({ ...form, gender: e.target.value })}
           className={inputCls}>
-          <option value="MALE">Nam</option>
-          <option value="FEMALE">Nữ</option>
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
         </select>
       </div>
 

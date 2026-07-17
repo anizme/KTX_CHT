@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { studentApi, buildingApi, floorApi } from '../../services/api';
 import type { Student, StudentDetail, StudentCreate, Building, Floor } from '../../services/api';
-import { GENDER_LABELS } from '../../types';
 import Modal from '../../components/manager/Modal';
 import StudentForm from '../../components/manager/StudentForm';
 import AssignRoomModal from '../../components/manager/AssignRoomModal';
@@ -52,6 +51,7 @@ export default function Students() {
       const { data } = await studentApi.list(params);
       let result = data;
       if (filterAssignStatus === 'ASSIGNED') result = result.filter(s => s.room_id !== null);
+      if (filterGender) result = result.filter(s => s.gender == filterGender);
       if (filterName) result = result.filter(s => s.full_name.toLowerCase().includes(filterName.toLowerCase()));
       if (filterRoom) result = result.filter(s => s.room_label?.toLowerCase().includes(filterRoom.toLowerCase()));
       if (filterMinViolation) result = result.filter(s => s.violation_count >= Number(filterMinViolation));
@@ -238,8 +238,8 @@ export default function Students() {
             className={inputCls}
           >
             <option value="">Tất cả giới tính</option>
-            <option value="MALE">Nam</option>
-            <option value="FEMALE">Nữ</option>
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
           </select>
 
           <select
@@ -359,7 +359,7 @@ export default function Students() {
                   </td>
                   <td className="px-4 py-3 text-slate-400">{i + 1}</td>
                   <td className="px-4 py-3 font-medium">{s.full_name}</td>
-                  <td className="px-4 py-3">{GENDER_LABELS[s.gender as 'MALE'|'FEMALE'] ?? s.gender}</td>
+                  <td className="px-4 py-3">{s.gender}</td>
                   <td className="px-4 py-3">{s.class_name}</td>
                   <td className="px-4 py-3">{s.hometown}</td>
                   <td className="px-4 py-3 font-mono text-sm">

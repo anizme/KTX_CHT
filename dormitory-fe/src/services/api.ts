@@ -122,7 +122,6 @@ export const userApi = {
 };
 
 import type {
-  Post, PostCreate, PostType,
   AwardType, StudentAward, StudentAwardCreate,
   AwardDistributionItem, OccupancyByBuildingItem,
   GradeDistributionItem, ViolationDistributionItem, GenderDistribution,

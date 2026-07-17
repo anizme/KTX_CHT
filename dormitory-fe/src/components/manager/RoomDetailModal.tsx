@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { roomApi } from '../../services/api';
 import type { Room } from '../../services/api';
-import { GENDER_LABELS } from '../../types';
 import Modal from './Modal';
 
 interface RoomDetail extends Room {
@@ -64,7 +63,7 @@ export default function RoomDetailModal({ room, onClose }: Props) {
                     <div>
                       <span className="font-medium">{s.full_name}</span>
                       <span className="text-sm text-slate-400 ml-2">
-                        {GENDER_LABELS[s.gender as 'MALE'|'FEMALE'] ?? s.gender} - {s.class_name}
+                        {s.gender} - {s.class_name}
                       </span>
                     </div>
                     {s.violation_count > 0 && (

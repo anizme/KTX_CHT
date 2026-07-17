@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Modal from './Modal';
 import { studentApi } from '../../services/api';
-import { GENDER_LABELS } from '../../types';
 import type { Student } from '../../services/api';
 
 interface Violation {
@@ -72,9 +71,7 @@ export default function StudentDetailModal({
             <InfoCard
               label="Giới tính"
               value={
-                GENDER_LABELS[
-                  detail.gender as 'MALE' | 'FEMALE'
-                ] ?? detail.gender
+                detail.gender
               }
             />
 

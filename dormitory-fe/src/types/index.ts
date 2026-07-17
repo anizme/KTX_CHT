@@ -1,9 +1,4 @@
-export type Gender = 'MALE' | 'FEMALE';
-
-export const GENDER_LABELS: Record<Gender, string> = {
-  MALE: 'Nam',
-  FEMALE: 'Nữ',
-};
+export type Gender = 'Nam' | 'Nữ';
 
 export type RoomType =
   | 'Phòng ở' | 'Phòng tự học' | 'Nhà ăn'

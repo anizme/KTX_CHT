@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
 import type { Gender, StudentSearchForm } from '../types';
-import { GENDER_LABELS } from '../types';
 
 const inputCls =
   'rounded-lg border border-slate-200 bg-white/90 px-3 py-2 shadow-sm ' +
@@ -96,8 +95,8 @@ export default function Search() {
             onChange={e => set({ gender: e.target.value as Gender })}
             className={inputCls}>
             <option value="">Tất cả giới tính</option>
-            <option value="MALE">Nam</option>
-            <option value="FEMALE">Nữ</option>
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
           </select>
 
           <select value={buildingId}
@@ -146,7 +145,7 @@ export default function Search() {
                   <tr key={student.id} className="hover:bg-slate-50/60">
                     <td className="px-4 py-3 text-slate-500">{i + 1}</td>
                     <td className="px-4 py-3 font-medium">{student.full_name}</td>
-                    <td className="px-4 py-3">{GENDER_LABELS[student.gender] ?? student.gender}</td>
+                    <td className="px-4 py-3">{student.gender}</td>
                     <td className="px-4 py-3">{student.hometown}</td>
                     <td className="px-4 py-3">{student.class_name}</td>
                     <td className="px-4 py-3 font-mono">{student.room_label || '—'}</td>
